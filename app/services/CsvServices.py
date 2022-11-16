@@ -1,4 +1,5 @@
 import csv
+from datetime import datetime, timezone
 
 # Checks if the tweet has media files attached to it.
 def hasAttachment(tweetInfo):
@@ -22,6 +23,10 @@ def getTweetTimeShift(isoDate):
 
     return 3
 
+# Converts user joined date into time elapsed in days since joining Twitter
+def getDaysSinceJoiningTwitter(userJoinDate):
+    return (datetime.now(timezone.utc) - userJoinDate).days
+
 def getInfoIfUserFound(user_id, users):
     user_info = []
 
@@ -40,7 +45,7 @@ def CreateTweetCSV(tweets, category, hasHeader= True):
     csvWriter = csv.writer(file, delimiter=',')
 
     if hasHeader:
-        csvWriter.writerow(["Tweet Time Shift","Tweet Category","User Joined Date",
+        csvWriter.writerow(["Tweet Time Shift","Tweet Category","Twitter User Duration",
                     "Verified User", "User Tweet Count", "User Followers", "Sensitive Tweet",'Parent Tweet','Has Media',"Retweets", "Likes"])
 
     users = tweets.includes['users']
@@ -50,7 +55,7 @@ def CreateTweetCSV(tweets, category, hasHeader= True):
         has_user_info, user = getInfoIfUserFound(tweet.author_id, users)
 
         if has_user_info:
-            csvWriter.writerow([getTweetTimeShift(tweet.created_at),category,user.created_at ,
+            csvWriter.writerow([getTweetTimeShift(tweet.created_at),category, getDaysSinceJoiningTwitter(user.created_at),
             user.verified,user.public_metrics['tweet_count'], 
             user.public_metrics['followers_count'],tweet.possibly_sensitive,
             isParentTweet(tweet),
