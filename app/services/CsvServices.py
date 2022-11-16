@@ -41,7 +41,7 @@ def getInfoIfUserFound(user_id, users):
 
 # Creates the csv from the tweets data.
 def CreateTweetCSV(tweets, category, hasHeader= True):
-    file = open('tweets.csv','a')
+    file = open('tweets.csv','a',newline='')
     csvWriter = csv.writer(file, delimiter=',')
 
     if hasHeader:
