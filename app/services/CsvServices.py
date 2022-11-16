@@ -25,7 +25,7 @@ def CreateTweetCSV(tweets, category, hasHeader= True):
             int(user.verified),user.public_metrics['tweet_count'], 
             user.public_metrics['followers_count'],int(tweet.possibly_sensitive),
             int(CsvUtil.isParentTweet(tweet)),
-            int(CsvUtil.hasAttachment(tweet)),int(CsvUtil.hasTags(tweet)),tweet.public_metrics['retweet_count'],tweet.public_metrics['like_count']]
+            int(CsvUtil.hasTags(tweet)),int(CsvUtil.hasAttachment(tweet)),tweet.public_metrics['retweet_count'],tweet.public_metrics['like_count']]
             )
         
     file.close()

@@ -16,7 +16,7 @@ def getCategoryEnumeration(category_name):
 
 # Checks if the tweet has media files attached to it.
 def hasAttachment(tweetInfo):
-    return 'attachments' in tweetInfo and ( 'mdeia_keys' in tweetInfo.attachments and len(tweetInfo.attachments['media_keys']) > 0)
+    return 'attachments' in tweetInfo and ( 'media_keys' in tweetInfo.attachments and len(tweetInfo.attachments['media_keys']) > 0)
 
 def hasTags(tweetInfo):
     return 'entities' in tweetInfo and (('hashtags' in tweetInfo.entities and len(tweetInfo.entities['hashtags'])>0) 
