@@ -17,7 +17,7 @@ def getRecentTweets():
 
 
 tweets = getRecentTweets()
-CsvServices.CreateTweetCSV(tweets, 'music',False)
+CsvServices.CreateTweetCSV(tweets, 'music')
 
 
 
