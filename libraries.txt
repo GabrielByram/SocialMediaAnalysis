@@ -1,3 +1,5 @@
 pip install tweepy
 pip install python-dotenv
 pip install datetime
+pip install pandas
+pip install sklearn
