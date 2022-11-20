@@ -1,25 +1,24 @@
 # Get category for the volume.
 def getVolumeCategory(volume):
-    if(volume >= 0 and volume<=100):
+    if(volume >= 0 and volume<=1000):
         return 1
-    elif(volume >100 and volume <=1000):
+    elif(volume >1000 and volume <=2500):
         return 2
-    elif(volume > 1000 and volume <= 5000):
+    elif(volume >2500 and volume <= 8000):
         return 3
-    elif(volume > 5000 and volume <= 25000):
-        return 4
     else:
-        return 5
-    
+        return 4
 
 # Normalized the given column in the data frame.
 def getNormalizedValue(dataset, column):
     column_values = dataset[column]
 
     categories = []
+    max_value = column_values.max()
+    min_value = column_values.min()
 
     for value in column_values:
-        categories.append(getVolumeCategory(value))
+        categories.append((value - min_value) / (max_value - min_value))
         
     return categories
 
@@ -48,8 +47,7 @@ def getAccuracy(predicted_labels, actual_labels):
     for index, label in enumerate(predicted_labels):
         if label == actual_labels[index] :
             correct+=1
-        
-        
+
     return correct , correct / len(predicted_labels)
 
 # Convert the day to years as an integer.
