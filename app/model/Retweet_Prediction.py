@@ -40,6 +40,7 @@ def main(dataset):
     correct_count , accuracy = ModelUtil.getAccuracy(predicted_labels,np.array(y_test))
 
     print(correct_count,accuracy)
+    print('here')
 
 dataset = pd.read_csv("DataSet.csv")
 main(dataset)
