@@ -42,5 +42,7 @@ def main(dataset):
     print(correct_count,accuracy)
     print('here')
 
+    print('ok here')
+
 dataset = pd.read_csv("DataSet.csv")
 main(dataset)
