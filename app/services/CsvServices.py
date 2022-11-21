@@ -57,3 +57,53 @@ def CreateTweetCSV(tweets, category, hasHeader= True):
             )
         
     file.close()
+
+
+def CreateTweetUserCSV(tweets, hasHeader= True):
+   
+    csv_head = [
+        "TweetID",
+        "AuthorID",
+        "AuthorName", 
+        "InReplyToUserID",
+        "InReplyToUsername",
+        "ReferencedTweetID",
+        "ReferencedTweetType",
+        "MentionsUsername",
+        "MentionsID",
+        "Verified"
+    ]
+
+    data = tweets.data
+    users = tweets.includes['users']
+
+    with open('tweets_user.csv', 'a', newline='', encoding='utf-8') as file:
+        csvWriter = csv.writer(file, delimiter=',')
+        
+        if hasHeader:
+            csvWriter.writerow(csv_head)
+
+        if data is not None:  # Fixes the error: TypeError: 'NoneType' object is not iterable
+            for tweet in data:
+                # Get Author ID INFO
+                has_user_info, user = CsvUtil.getInfoIfUserFound(tweet.author_id, users)
+                # Get InReplyToUserID
+                has_user_info2, inreplytouser = CsvUtil.getInfoIfUserFound(tweet.in_reply_to_user_id, users)
+            
+                if has_user_info and has_user_info2:
+                    if ('entities' in tweet and ('mentions' in tweet.entities and len(tweet.entities['mentions']) > 0)):
+                        
+                        for entity in tweet.entities['mentions']:
+                            
+                            csvWriter.writerow([
+                                "'"+str(tweet.id), #Tweet ID
+                                "'"+str(tweet.author_id), #AuthorID
+                                user.username, #Username - in_reply_to_screen_name
+                                "'"+str(tweet.in_reply_to_user_id), #Tweet_in_reply_to_user_id
+                                inreplytouser.username, #Tweet_in_reply_to_user_name
+                                "'"+str(tweet.referenced_tweets[0]["id"]), #Referrenced Tweet Id
+                                tweet.referenced_tweets[0]["type"], #Referrenced Tweet Type
+                                entity["username"], #Tweet_Entities
+                                "'"+str(entity["id"]), #Tweet_Entities
+                                user.verified #Verified
+                            ])
