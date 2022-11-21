@@ -8,7 +8,7 @@ import CsvServices
 Client = getClient()
 
 def getRecentTweets():
-   tweets = Client.search_recent_tweets(query='((Harry Styles songs))  has:media',
+   tweets = Client.search_recent_tweets(query='(Lobster) is:verified has:hashtags',
    expansions= ['author_id', 'referenced_tweets.id'],
    tweet_fields = ['created_at','public_metrics','possibly_sensitive','attachments','referenced_tweets','entities'], 
    user_fields = ['id','public_metrics','verified', 'created_at'], max_results = 100 )
@@ -17,7 +17,7 @@ def getRecentTweets():
 
 
 tweets = getRecentTweets()
-CsvServices.CreateTweetCSV(tweets, 'music')
+CsvServices.CreateTweetCSV(tweets, 'food',False)
 
 
 
