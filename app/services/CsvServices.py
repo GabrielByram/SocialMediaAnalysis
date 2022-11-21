@@ -80,8 +80,8 @@ def CreateTweetUserCSV(tweets, hasHeader= True):
     with open('tweets_user.csv', 'a', newline='', encoding='utf-8') as file:
         csvWriter = csv.writer(file, delimiter=',')
         
-        if hasHeader:
-            csvWriter.writerow(csv_head)
+        #if hasHeader: [Commented]
+        csvWriter.writerow(csv_head)
 
         if data is not None:  # Fixes the error: TypeError: 'NoneType' object is not iterable
             for tweet in data:
