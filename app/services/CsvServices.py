@@ -80,8 +80,8 @@ def CreateTweetUserCSV(tweets, hasHeader= True):
     with open('tweets_user.csv', 'a', newline='', encoding='utf-8') as file:
         csvWriter = csv.writer(file, delimiter=',')
         
-        if hasHeader:
-            csvWriter.writerow(csv_head)
+        #if hasHeader: [Commented]
+        csvWriter.writerow(csv_head)
 
         if data is not None:  # Fixes the error: TypeError: 'NoneType' object is not iterable
             for tweet in data:
@@ -91,19 +91,20 @@ def CreateTweetUserCSV(tweets, hasHeader= True):
                 has_user_info2, inreplytouser = CsvUtil.getInfoIfUserFound(tweet.in_reply_to_user_id, users)
             
                 if has_user_info and has_user_info2:
-                    if ('entities' in tweet and ('mentions' in tweet.entities and len(tweet.entities['mentions']) > 0)):
-                        
-                        for entity in tweet.entities['mentions']:
+                    if tweet.referenced_tweets is not None:
+                        if ('entities' in tweet and ('mentions' in tweet.entities and len(tweet.entities['mentions']) > 0)):
                             
-                            csvWriter.writerow([
-                                "'"+str(tweet.id), #Tweet ID
-                                "'"+str(tweet.author_id), #AuthorID
-                                user.username, #Username - in_reply_to_screen_name
-                                "'"+str(tweet.in_reply_to_user_id), #Tweet_in_reply_to_user_id
-                                inreplytouser.username, #Tweet_in_reply_to_user_name
-                                "'"+str(tweet.referenced_tweets[0]["id"]), #Referrenced Tweet Id
-                                tweet.referenced_tweets[0]["type"], #Referrenced Tweet Type
-                                entity["username"], #Tweet_Entities
-                                "'"+str(entity["id"]), #Tweet_Entities
-                                user.verified #Verified
-                            ])
+                            for entity in tweet.entities['mentions']:
+                                
+                                csvWriter.writerow([
+                                    "'"+str(tweet.id), #Tweet ID
+                                    "'"+str(tweet.author_id), #AuthorID
+                                    user.username, #Username - in_reply_to_screen_name
+                                    "'"+str(tweet.in_reply_to_user_id), #Tweet_in_reply_to_user_id
+                                    inreplytouser.username, #Tweet_in_reply_to_user_name
+                                    "'"+str(tweet.referenced_tweets[0]["id"]), #Referrenced Tweet Id
+                                    tweet.referenced_tweets[0]["type"], #Referrenced Tweet Type
+                                    entity["username"], #Tweet_Entities
+                                    "'"+str(entity["id"]), #Tweet_Entities
+                                    user.verified #Verified
+                                ])
