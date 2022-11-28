@@ -1,4 +1,5 @@
 import csv
+from GraphUtil import *
 from ast import literal_eval
 
 import community as community_louvain
@@ -6,6 +7,10 @@ import matplotlib.cm as cm
 import networkx as nx
 import pandas as pd
 from matplotlib import pyplot as plt
+
+sys.path.append(os.path.join(os.path.dirname(sys.path[0]), 'services'))
+
+import CsvServices
 
 df = pd.read_csv('obama_trump_elon.csv')
 df["AuthorID"] = df["AuthorID"].str.replace("'", "")
@@ -49,7 +54,6 @@ nx.draw_networkx(G0, pos=pos, ax=ax, **plot_options)
 plt.show()
 
 # louvian method
-
 # compute the best partition
 partition = community_louvain.best_partition(G0)
 
@@ -62,3 +66,17 @@ nx.draw_networkx_nodes(G0, pos, partition.keys(), node_size=40,
                        cmap=cmap, node_color=list(partition.values()))
 nx.draw_networkx_edges(G0, pos, alpha=0.5)
 plt.show()
+
+# Get list of users by community
+numOfCommunities = int(max(partition.values())) + 1
+communityList = getCommunities(partition, numOfCommunities)
+
+# Get csv of user info from users in each community
+hasHeader = True
+for communityNum in range(0, numOfCommunities):
+    userInfo = getUserInfo(communityList, communityNum)
+    CsvServices.CreateUsersInGraphCSV(userInfo, communityNum, hasHeader)
+    hasHeader = False
+
+# Display fields of each community in different graphs with MatPlotLib
+displayCommunityCharts(numOfCommunities)
