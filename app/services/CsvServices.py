@@ -108,3 +108,34 @@ def CreateTweetUserCSV(tweets, hasHeader= False):
                                     "'"+str(entity["id"]), #Tweet_Entities
                                     user.verified #Verified
                                 ])
+
+# Creates the csv from the tweets data.
+def CreateUsersInGraphCSV(users, communityNumber, hasHeader= True):
+    file = open('users_in_graph.csv','a',newline='')
+    csvWriter = csv.writer(file, delimiter=',')
+
+    if hasHeader:
+        csvWriter.writerow([
+        "Twitter User Duration",
+        "Verified User", 
+        "User Tweet Count", 
+        "User Followers",
+        "Community"
+        ])
+
+    #users = users.includes['users']
+    data = users.data
+
+    for user in data:
+        #has_user_info, user = CsvUtil.getInfoIfUserFound(user.author_id, users)
+
+        #if has_user_info:
+        csvWriter.writerow([
+        CsvUtil.getDaysSinceJoiningTwitter(user.created_at),
+        int(user.verified),
+        user.public_metrics['tweet_count'], 
+        user.public_metrics['followers_count'],
+        communityNumber
+        ])
+        
+    file.close()
