@@ -37,7 +37,7 @@ def findAverageOfField(userInfoList, fieldNum):
     avgOfField = sumOfField / len(userInfoList)
     return avgOfField
 
-def displayCommunityCharts(numOfCommunities):
+def displayCommunityCharts(numOfCommunities,colors):
     data = dict()
     fields = ['Avg. Time since Creating Account', "Avg. Number of Tweets", "Avg. Number of followers"]
 
@@ -63,5 +63,5 @@ def displayCommunityCharts(numOfCommunities):
 
         #plt.xticks(fontsize=10)
         plt.title(fields[fieldNum])
-        plt.bar(fieldData.keys(), fieldData.values(), color="b")
+        plt.bar(fieldData.keys(), fieldData.values(), color = colors)
         plt.show()
