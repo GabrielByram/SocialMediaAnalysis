@@ -40,6 +40,8 @@ def findAverageOfField(userInfoList, fieldNum):
 def displayCommunityCharts(numOfCommunities):
     data = dict()
     fields = ['Avg. Time since Creating Account', "Avg. Number of Tweets", "Avg. Number of followers"]
+    color_list = ['blue','green','red','orange','black','purple','olive','gold','violet','limegreen',
+    'darkorange','darkred','darkblue','grey','aqua','magenta','maroon','cyan','teal','indigo','white']
 
     with open('users_in_graph.csv', 'r') as f:
         index = 0
@@ -63,5 +65,15 @@ def displayCommunityCharts(numOfCommunities):
 
         #plt.xticks(fontsize=10)
         plt.title(fields[fieldNum])
-        plt.bar(fieldData.keys(), fieldData.values(), color="b")
+        plt.bar(fieldData.keys(), fieldData.values(), color=color_list)
         plt.show()
+
+def getUser(userId):
+    Client = index.getClient()
+
+    userInfo = Client.get_users(
+        ids=userId,
+        user_fields = ['id','public_metrics','verified', 'created_at']
+    )
+
+    return userInfo
