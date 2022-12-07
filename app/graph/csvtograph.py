@@ -1,4 +1,3 @@
-import csv
 from GraphUtil import *
 from ast import literal_eval
 
@@ -53,8 +52,8 @@ def drawCommunityGraph(graph, communities,colors):
 
     for index , color in enumerate(colors):
         nodes = getNodesFromGivenCommunity(communities, index)
-        nx.draw_networkx_nodes(G0, pos, nodelist= nodes, node_size=30,
-                        node_color=color,alpha = 1)
+        nx.draw_networkx_nodes(G0, pos, nodelist= nodes, node_size=80,
+                        node_color=color,alpha = 0.6)
     
     nx.draw_networkx_edges(G0, pos, alpha=1)
     ax.set_title("Communities In Graph")
@@ -110,5 +109,8 @@ color_maps = cm.get_cmap('tab20b',numOfCommunities)
 color_list = [colorPalette.rgb2hex(color_maps(index)[:3]) for index in range(color_maps.N)]
 
 #drawDifferentLayoutGraphs(G,G0)
-drawCommunityGraph(G0,partition,color_list)
-displayCommunityCharts(numOfCommunities,color_list)
+def implementVisualization():
+    drawCommunityGraph(G0,partition,color_list)
+    displayCommunityCharts(numOfCommunities,color_list)
+
+implementVisualization()

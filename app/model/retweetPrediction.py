@@ -85,5 +85,8 @@ def main(dataset, shuffle):
     print("\n")
     print("==================================================================================")
 
-dataset = pd.read_csv("Collection.csv")
-main(dataset, 5)
+def implementModel():
+    dataset = pd.read_csv("Collection.csv")
+    main(dataset, 5)
+
+implementModel()
