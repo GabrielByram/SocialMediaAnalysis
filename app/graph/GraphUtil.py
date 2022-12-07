@@ -48,7 +48,7 @@ def normalizeValues(values):
 def displayCommunityCharts(numOfCommunities,colors):
     data = dict()
     fields = ['Avg. Time since Creating Account', "Avg. Number of Tweets", "Avg. Number of followers"]
-    labels = [{'x_label' : "Communities" , "y_label": "Normalized Duration in Days"} , {'x_label': "Communities" , 'y_label': 'Normalized Tweets Count'},{'x_label': 'Communities', 'y_label': 'Normalized Followers Count'}]
+    labels = [{'x_label' : "Communities" , "y_label": "Duration in Days"} , {'x_label': "Communities" , 'y_label': 'Tweets Count'},{'x_label': 'Communities', 'y_label': 'Followers Count'}]
 
     with open('users_in_graph.csv', 'r') as f:
         index = 0
@@ -74,5 +74,5 @@ def displayCommunityCharts(numOfCommunities,colors):
         plt.title(fields[fieldNum])
         plt.xlabel(labels[fieldNum]['x_label'])
         plt.ylabel(labels[fieldNum]['y_label'])
-        plt.bar(fieldData.keys(), normalizeValues(fieldData.values()), color = colors)
+        plt.bar(fieldData.keys(), fieldData.values(), color = colors)
         plt.show()
