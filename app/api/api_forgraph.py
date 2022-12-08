@@ -1,7 +1,5 @@
 from index import *
 
-import tweepy
-import csv
 from dotenv import load_dotenv
 
 import sys,os

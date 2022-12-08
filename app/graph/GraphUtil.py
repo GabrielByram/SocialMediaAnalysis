@@ -1,6 +1,4 @@
 import sys, os
-import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 
 sys.path.append(os.path.join(os.path.dirname(sys.path[0]), 'api'))
@@ -37,9 +35,20 @@ def findAverageOfField(userInfoList, fieldNum):
     avgOfField = sumOfField / len(userInfoList)
     return avgOfField
 
-def displayCommunityCharts(numOfCommunities):
+def normalizeValues(values):
+    min_value = min(values)
+    max_value = max(values)
+
+    normalized_values = [ (value - min_value)/(max_value - min_value) for value in values]
+
+    return normalized_values
+
+
+
+def displayCommunityCharts(numOfCommunities,colors):
     data = dict()
     fields = ['Avg. Time since Creating Account', "Avg. Number of Tweets", "Avg. Number of followers"]
+    labels = [{'x_label' : "Communities" , "y_label": "Duration in Days"} , {'x_label': "Communities" , 'y_label': 'Tweets Count'},{'x_label': 'Communities', 'y_label': 'Followers Count'}]
 
     with open('users_in_graph.csv', 'r') as f:
         index = 0
@@ -63,5 +72,7 @@ def displayCommunityCharts(numOfCommunities):
 
         #plt.xticks(fontsize=10)
         plt.title(fields[fieldNum])
-        plt.bar(fieldData.keys(), fieldData.values(), color="b")
+        plt.xlabel(labels[fieldNum]['x_label'])
+        plt.ylabel(labels[fieldNum]['y_label'])
+        plt.bar(fieldData.keys(), fieldData.values(), color = colors)
         plt.show()

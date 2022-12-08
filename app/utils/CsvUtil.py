@@ -60,6 +60,7 @@ def getTweetTimeShift(isoDate):
 def getDaysSinceJoiningTwitter(userJoinDate):
     return (datetime.now(timezone.utc) - userJoinDate).days
 
+# Returns the user info if the user of given id is found.
 def getInfoIfUserFound(user_id, users):
     user_info = []
 

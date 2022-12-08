@@ -11,6 +11,23 @@ sys.path.append(os.path.join(os.path.dirname(sys.path[0]),'utils'))
 
 import ModelUtil
 
+features = [
+        "Tweet Time Shift",
+        "Tweet Category",
+        "Twitter User Duration",
+        "Verified User", 
+        "User Tweet Count", 
+        "User Followers",
+        "Friends Count", 
+        "User Listed", 
+        "Tweet Word Count",
+        "Sentiment Score",
+        'Parent Tweet Count',
+        'Hash Tags Count',
+        'Mentions Count',
+        'Media Count']
+
+
 def main(dataset, shuffle):
     # Random shuffling of the data.
     shuffled_data = dataset
@@ -40,23 +57,36 @@ def main(dataset, shuffle):
     predicted_labels_lg = model_lg.predict(x_test)
     correct_count_lg , accuracy_lg = ModelUtil.getAccuracy(predicted_labels_lg,np.array(y_test))
 
-    print("Logisitic Regression Model")
-    print(correct_count_lg,accuracy_lg)
-    print("\n")
-
-    # Implementing the SVM model
+    # Implementing the Random Forest model
     model_rf = RandomForestClassifier(class_weight = "balanced", random_state= 0 )
     model_rf.fit(x_train,y_train)
 
     predicted_labels_rf = model_rf.predict(x_test)
     correct_count_rf , accuracy_rf = ModelUtil.getAccuracy(predicted_labels_rf,np.array(y_test))
 
+    print("Class Weights in the dataset")
+    print(class_weights)
+    print("\n")
+    
     print("Random Forest Ensembles Classofier")
     print(correct_count_rf,accuracy_rf)
     print("\n")
 
-    print("Class Weights in the dataset")
-    print(class_weights)
+    print("Logisitic Regression Model")
+    print(correct_count_lg,accuracy_lg)
+    print("\n")
 
-dataset = pd.read_csv("Collection.csv")
-main(dataset, 5)
+    print("================================Coefficient Matrix================================")
+    for index,coefficents in enumerate(model_lg.coef_):
+        print("\n")
+        print("Virality Level : {}".format(index+1))
+        for index, coeff in enumerate(coefficents):
+            print("{} : {}".format(features[index], coeff))
+    print("\n")
+    print("==================================================================================")
+
+def implementModel():
+    dataset = pd.read_csv("Collection.csv")
+    main(dataset, 5)
+
+implementModel()

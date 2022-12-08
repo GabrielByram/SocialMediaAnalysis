@@ -112,6 +112,7 @@ def CreateTweetUserCSV(tweets, hasHeader= False):
 # Creates the csv from the tweets data.
 def CreateUsersInGraphCSV(users, communityNumber, hasHeader= True):
     file = open('users_in_graph.csv','a',newline='')
+
     csvWriter = csv.writer(file, delimiter=',')
 
     if hasHeader:
