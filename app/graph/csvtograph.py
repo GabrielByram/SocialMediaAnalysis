@@ -1,3 +1,8 @@
+# IMPORTANT NOTE FOR RUNNING THIS FILE
+# users_in_graph.csv must be REMOVED after each execution for this file to function properly
+# users_in_graph.csv is not automatically removed after each execution of csvtograph.py 
+# because it contains valuable information to look at and compare to graph data displayed 
+
 from GraphUtil import *
 from ast import literal_eval
 
